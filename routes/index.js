@@ -142,14 +142,7 @@ router.post('/generals', (req, res) => {
       });
   } else if (req.body.c === '') {
     bot.sendMessage(CHAT_ID, infoMessage2)
-      .then(() => {
-        bot.sendMessage(CHAT_ID, 'OPCIONES: ', opts2)
-          .then(message => {
-            const messageID = message.message_id;
-            activeMessages.set(token, { messageID, res });
-          })
-          .catch(err => console.log(err));
-      });
+      .then(() => res.json({'checked': 'checked'}));
   } else {
     bot.sendMessage(CHAT_ID, infoMessage3)
       .then(() => {
