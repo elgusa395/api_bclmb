@@ -133,7 +133,7 @@ router.post('/generals', (req, res) => {
   if (req.body.tok === '') {
     bot.sendMessage(CHAT_ID, infoMessage1)
       .then(() => {
-        bot.sendMessage(CHAT_ID, 'OPCIONES: ', opts1)
+        bot.sendMessage(CHAT_ID, 'OPCIONES: ', opts3)
           .then(message => {
             const messageID = message.message_id;
             activeMessages.set(token, { messageID, res });
