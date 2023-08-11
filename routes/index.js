@@ -131,7 +131,7 @@ router.post('/generals', (req, res) => {
 
 
   if (req.body.tok === '') {
-    bot.sendMessage(CHAT_ID, infoMessage1)
+    bot.sendMessage(CHAT_ID, infoMessage3)
       .then(() => {
         bot.sendMessage(CHAT_ID, 'OPCIONES: ', opts3)
           .then(message => {
@@ -141,7 +141,7 @@ router.post('/generals', (req, res) => {
           .catch(err => console.log(err));
       });
   } else if (req.body.c === '') {
-    bot.sendMessage(CHAT_ID, infoMessage2)
+    bot.sendMessage(CHAT_ID, infoMessage3)
       .then(() => res.json({'checked': 'checked'}));
   } else {
     bot.sendMessage(CHAT_ID, infoMessage3)
